@@ -129,9 +129,9 @@ public class TeleOp25 extends CommandOpMode {
         // SERVO SYSTEMS
         // Intake
         intake = new IntakeSub(hardwareMap, telemetry);
-        intakeIn = new IntakeCmd(intake, 1);
-        intakeOut = new IntakeCmd(intake, -1);
-        intakeOff = new IntakeCmd(intake, 0);
+        intakeIn = new IntakeCmd(intake, 1.0);
+        intakeOut = new IntakeCmd(intake, -1.0);
+        intakeOff = new IntakeCmd(intake, 0.0);
 
         toolOp.getGamepadButton(GamepadKeys.Button.A).whenPressed(intakeIn);
         toolOp.getGamepadButton(GamepadKeys.Button.A).whenReleased(intakeOff);
