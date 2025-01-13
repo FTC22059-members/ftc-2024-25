@@ -8,8 +8,8 @@ import org.firstinspires.ftc.teamcode.subsystems.DrivetrainSub;
 
 public class ArmToPosition extends CommandBase {
     private final ArmSub armSub;
-    private double degrees;
-    boolean instantFinish;
+    private final double degrees;
+    private final boolean instantFinish;
 
     public ArmToPosition(ArmSub armSub, double deg, DrivetrainSub drivetrain, boolean instantFinish) {
         this.armSub = armSub;
@@ -25,7 +25,7 @@ public class ArmToPosition extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return  instantFinish||
+        return  instantFinish ||
                 (armSub.convertDeg(armSub.armMotor.getCurrentPosition())<=degrees+2)
                 &&
                 (armSub.convertDeg(armSub.armMotor.getCurrentPosition())>=degrees-2);
