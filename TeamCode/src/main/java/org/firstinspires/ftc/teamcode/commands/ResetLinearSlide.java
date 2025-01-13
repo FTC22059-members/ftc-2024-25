@@ -17,4 +17,9 @@ public class ResetLinearSlide extends CommandBase {
     public void execute() {
         linearSlideSub.resetEncoder();
     }
+
+    @Override
+    public boolean isFinished(){
+        return true;
+    }
 }
