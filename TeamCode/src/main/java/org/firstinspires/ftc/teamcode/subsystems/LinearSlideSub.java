@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -10,6 +11,7 @@ import org.firstinspires.ftc.teamcode.Constants;
 
 public class LinearSlideSub extends SubsystemBase {
 
+    private final DcMotor armMotor;
     Telemetry telemetry;
 
     private DcMotor linearSlideMotor;
@@ -18,6 +20,8 @@ public class LinearSlideSub extends SubsystemBase {
         this.telemetry = tm;
 
         linearSlideMotor = hardwareMap.get(DcMotor.class, "linearSlideMotor");
+        armMotor = hardwareMap.get(DcMotorEx.class, "armMotor");
+
         linearSlideMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         linearSlideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         resetEncoder();
@@ -37,16 +41,18 @@ public class LinearSlideSub extends SubsystemBase {
         this.linearSlideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public void move(double power) {
-
-        if ((this.linearSlideMotor.getCurrentPosition() > getUpwardLimit()) && (power > 0)) {
-            power = 0;
-        } else if ((this.linearSlideMotor.getCurrentPosition() < Constants.LinearSlideConstants.downwardLimit) && (power < 0)) {
-            power = 0;
+    public void move(double speed) {
+        double armX = Math.cos(Math.toRadians(ticksToDeg(armMotor.getCurrentPosition()))) * (ticksToInches(linearSlideMotor.getCurrentPosition()) + 18);
+        
+        if ((armX > 42) && (speed > 0)) {
+            speed = 0;
+        } else if ((getMotor().getCurrentPosition() < Constants.LinearSlideConstants.downwardLimit) && (speed < 0)) {
+            speed = 0;
         }
 
-        linearSlideMotor.setPower(power);
-        //System.out.println("(lss) setting power to "+power);
+        telemetry.addData("armX", armX);
+
+        linearSlideMotor.setPower(speed);
     }
 
     /** This method gets the upward limit, and can be changed to dynamically calculate it based
@@ -65,11 +71,23 @@ public class LinearSlideSub extends SubsystemBase {
         linearSlideMotor.setPower(power);
     }
 
+    public DcMotor getMotor(){
+        return linearSlideMotor;
+    }
+
     public void setPower(double power){
         linearSlideMotor.setPower(power);
     }
 
     public int getPosition(){
         return linearSlideMotor.getCurrentPosition();
+    }
+
+    public int ticksToInches(int ticks) {
+        return ticks / 112;
+    }
+
+    public double ticksToDeg(int ticks){
+        return (ticks-135.0)*107.0/708.0;
     }
 }
