@@ -2,24 +2,30 @@ package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import org.firstinspires.ftc.teamcode.subsystems.ArmSub;
-import org.firstinspires.ftc.teamcode.subsystems.IntakeSub;
-import org.firstinspires.ftc.teamcode.commands.ArmHighGoal;
-import org.firstinspires.ftc.teamcode.commands.IntakeCmd;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-@Autonomous(name = "Auto Red/Blue")
-public class AutoRedBlue extends AutoCommandOpMode {
+
+//The only reason that this exists is that I spent a lot of time working on it by accident.
+//Can be partially used in the event that a preload is not available for some reason
+@Autonomous(name = "Auto Red/Blue OLD")
+@Disabled
+public class AutoRedBlueOld extends AutoCommandOpMode {
     public void logic() {
         schedule(new SequentialCommandGroup(
-                /*step 1: go to central position with PinkAqua*/
                 drive(12)
+                /*step 1: go to central position with PinkAqua*/
+                , arm0
+                , wristCenter
                 , turnCW(90)
-                , drive(9)
+                , drive(15)
                 , turnCCW(90)
 
                 /*step 2: go to cage (this has a different name)*/
-                , drive(16)
+                , drive(9)
                 /* do something with the arm*/
+                , armBottom
+                , grab
+                , arm0
 
                 /*step 3: go to board*/
                 , drive(-9)

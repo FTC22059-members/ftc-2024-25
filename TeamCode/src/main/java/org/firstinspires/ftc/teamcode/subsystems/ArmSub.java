@@ -84,6 +84,10 @@ public class ArmSub extends SubsystemBase{
         }
     }
 
+    public void setPower0(){
+        armMotor.setPower(0);
+    }
+
     public double getDeg(){
         return convertDeg(armMotor.getCurrentPosition());
     }
