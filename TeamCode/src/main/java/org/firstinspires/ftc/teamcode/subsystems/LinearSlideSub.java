@@ -43,10 +43,18 @@ public class LinearSlideSub extends SubsystemBase {
 
     public void move(double speed) {
         double armX = Math.cos(Math.toRadians(ticksToDeg(armMotor.getCurrentPosition()))) * (ticksToInches(linearSlideMotor.getCurrentPosition()) + 18);
-        
-        if ((armX > 42) && (speed > 0)) {
+
+        if ((armX > 36) && (speed > 0)) {
             speed = 0;
         } else if ((getMotor().getCurrentPosition() < Constants.LinearSlideConstants.downwardLimit) && (speed < 0)) {
+            speed = 0;
+        }
+
+        if ((armX > 38) && (speed <= 0)) {
+            speed = -0.5;
+        }
+
+        if (getMotor().getCurrentPosition() > 2900 && (speed > 0)) {
             speed = 0;
         }
 
