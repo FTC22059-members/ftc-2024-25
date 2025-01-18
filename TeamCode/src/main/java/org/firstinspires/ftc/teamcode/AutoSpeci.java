@@ -3,7 +3,9 @@ package org.firstinspires.ftc.teamcode;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name = "Auto Specimen")
+import org.firstinspires.ftc.teamcode.commands.ArmPower0;
+
+@Autonomous(name = "Auto Specimen (A4, left edge)")
 public class AutoSpeci extends AutoCommandOpMode {
     public void logic() {
         schedule(new SequentialCommandGroup(
@@ -21,6 +23,7 @@ public class AutoSpeci extends AutoCommandOpMode {
                 , drive(-32)
                 , turnCW(90)
                 , drive(-12)
+                , new ArmPower0(arm)
         ));
     }
 }

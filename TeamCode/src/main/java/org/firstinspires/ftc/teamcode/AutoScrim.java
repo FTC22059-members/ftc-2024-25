@@ -2,8 +2,10 @@ package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @Autonomous(name = "Auto Scrimmage")
+@Disabled
 public class AutoScrim extends AutoCommandOpMode {
 
     @Override
