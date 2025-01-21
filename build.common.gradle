@@ -48,6 +48,7 @@ android {
     }
 
     defaultConfig {
+        multiDexEnabled true
         signingConfig signingConfigs.debug
         applicationId 'com.qualcomm.ftcrobotcontroller'
         minSdkVersion 24
@@ -113,5 +114,6 @@ android {
 }
 
 repositories {
+    mavenCentral()
 }
 
