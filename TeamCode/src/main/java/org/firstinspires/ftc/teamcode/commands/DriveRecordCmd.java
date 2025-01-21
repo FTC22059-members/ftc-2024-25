@@ -1,10 +1,15 @@
 package org.firstinspires.ftc.teamcode.commands;
 
+import android.os.Environment;
+
 import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.subsystems.DrivetrainSub;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
@@ -26,8 +31,10 @@ public class DriveRecordCmd extends CommandBase {
     private final BooleanSupplier fieldCentricity;
     private Telemetry telemetry;
     private double[] currentState = new double[4];
-    private double epoch;
-
+    private double startTime;
+    private FileWriter log;
+    private String directoryPath;
+    private File directory;
 
     /**
      * This command deals with the driving in teleop.
@@ -48,8 +55,24 @@ public class DriveRecordCmd extends CommandBase {
         this.telemetry = telemetry;
         angleDegrees = angleParam;
         fieldCentricity = fieldCentricityParam;
-        this.epoch=System.currentTimeMillis();
+
+        directoryPath = Environment.getExternalStorageDirectory().getPath()+"/AutoLogs";
+        directory = new File(directoryPath);
+        directory.mkdir();
         addRequirements(this.drivetrainSub);
+    }
+
+    @Override
+    public void initialize(){
+        this.startTime=System.currentTimeMillis();
+
+        try {
+            log = new FileWriter(directoryPath+"/"+(long)startTime/1000+".txt");
+            log.write("[0.0, 0.0, 0.0, 0.0], \n");
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -61,12 +84,21 @@ public class DriveRecordCmd extends CommandBase {
         double rightTrigger = this.rightTrigger.getAsDouble();
         double leftTrigger = this.leftTrigger.getAsDouble();
 
-        currentState[0]=System.currentTimeMillis()-epoch;
+        currentState[0]=System.currentTimeMillis()- startTime;
         currentState[1]=driveX;
         currentState[2]=driveY;
         currentState[3]=turnX;
 
         telemetry.addData("Current State", Arrays.toString(currentState));
+
+        try {
+            log.write(Arrays.toString(currentState).concat(", \n"));
+            System.out.println("Success");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error");
+        }
+
 
         if (leftTrigger > 0.05 && leftTrigger < 0.75) {
             brakeMultiplier = (1 - leftTrigger)/2;
