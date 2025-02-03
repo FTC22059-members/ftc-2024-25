@@ -137,7 +137,6 @@ public class TeleOp25 extends CommandOpMode {
         toolOp.getGamepadButton(GamepadKeys.Button.A).whenReleased(intakeOff);
         toolOp.getGamepadButton(GamepadKeys.Button.X).whenPressed(intakeOut);
         toolOp.getGamepadButton(GamepadKeys.Button.X).whenReleased(intakeOff);
-
         toolOp.getGamepadButton(GamepadKeys.Button.B).whenPressed(resetLinearSlide);
 
         // Wrist
@@ -148,8 +147,8 @@ public class TeleOp25 extends CommandOpMode {
         wristUp = new MoveWristBadlyUp(wrist, telemetry);
         wristDown = new MoveWristBadlyDown(wrist, telemetry);
 
-        toolOp.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(wristUp);
-        toolOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(wristDown);
+        toolOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(wristUp);
+        toolOp.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(wristDown);
 
 
 
