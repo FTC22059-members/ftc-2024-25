@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.commands.DriveCmd;
 import org.firstinspires.ftc.teamcode.commands.IntakeCmd;
 import org.firstinspires.ftc.teamcode.commands.MoveArm;
 import org.firstinspires.ftc.teamcode.commands.MoveLinearSlide;
+import org.firstinspires.ftc.teamcode.commands.MoveNewWrist;
 import org.firstinspires.ftc.teamcode.commands.ResetLinearSlide;
 import org.firstinspires.ftc.teamcode.commands.MoveWristBadlyDown;
 import org.firstinspires.ftc.teamcode.commands.MoveWristBadlyUp;
@@ -27,6 +28,7 @@ import org.firstinspires.ftc.teamcode.subsystems.DrivetrainSub;
 import org.firstinspires.ftc.teamcode.subsystems.ImuSub;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSub;
 import org.firstinspires.ftc.teamcode.subsystems.LinearSlideSub;
+import org.firstinspires.ftc.teamcode.subsystems.NewWristSub;
 import org.firstinspires.ftc.teamcode.subsystems.WristSub;
 
 
@@ -67,6 +69,9 @@ public class TeleOp25 extends CommandOpMode {
     private ResetLinearSlide resetLinearSlide;
     private TurnCmd turnCW;
     private TurnCmd turnCCW;
+    private NewWristSub newWrist;
+    private MoveNewWrist moveNewWristLeft;
+    private MoveNewWrist moveNewWristRight;
 
 
     @Override
@@ -127,17 +132,14 @@ public class TeleOp25 extends CommandOpMode {
 
 
         // SERVO SYSTEMS
-        // Intake
-        intake = new IntakeSub(hardwareMap, telemetry);
-        intakeIn = new IntakeCmd(intake, 1.0);
-        intakeOut = new IntakeCmd(intake, -1.0);
-        intakeOff = new IntakeCmd(intake, 0.0);
 
-        toolOp.getGamepadButton(GamepadKeys.Button.A).whenPressed(intakeIn);
-        toolOp.getGamepadButton(GamepadKeys.Button.A).whenReleased(intakeOff);
-        toolOp.getGamepadButton(GamepadKeys.Button.X).whenPressed(intakeOut);
-        toolOp.getGamepadButton(GamepadKeys.Button.X).whenReleased(intakeOff);
-        toolOp.getGamepadButton(GamepadKeys.Button.B).whenPressed(resetLinearSlide);
+        // New Wrist
+        newWrist = new NewWristSub(hardwareMap, telemetry);
+        moveNewWristLeft = new MoveNewWrist(newWrist, telemetry, 0.1);
+        moveNewWristRight = new MoveNewWrist(newWrist, telemetry, -0.1);
+
+        toolOp.getGamepadButton(GamepadKeys.Button.A).whenPressed(moveNewWristLeft);
+        toolOp.getGamepadButton(GamepadKeys.Button.X).whenPressed(moveNewWristRight);
 
         // Wrist
         wrist = new WristSub(hardwareMap, telemetry);

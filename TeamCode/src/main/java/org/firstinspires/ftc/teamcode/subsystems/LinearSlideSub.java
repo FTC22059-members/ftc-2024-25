@@ -59,6 +59,7 @@ public class LinearSlideSub extends SubsystemBase {
         }
 
         telemetry.addData("armX", armX);
+        telemetry.addData("lsPos", getMotor().getCurrentPosition());
 
         linearSlideMotor.setPower(speed);
     }
