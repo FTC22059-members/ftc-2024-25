@@ -3,22 +3,19 @@ package org.firstinspires.ftc.teamcode;
 import android.os.Environment;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
-import com.arcrobotics.ftclib.command.InstantCommand;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+
 import org.firstinspires.ftc.teamcode.subsystems.DrivetrainSub;
 
-import org.firstinspires.ftc.teamcode.commands.DriveRecordCmd;
 import org.firstinspires.ftc.teamcode.commands.DriveCmd;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
 
 @Autonomous(name = "Autonomous Record")
+@Disabled
 public class AutoRecord extends CommandOpMode {
 
     private BufferedReader reader;

@@ -15,7 +15,7 @@ public class AutoRedBlueOld extends AutoCommandOpMode {
                 drive(12)
                 /*step 1: go to central position with PinkAqua*/
                 , arm0
-                , wristCenter
+                //, wristCenter NOTE: Original function has been removed (Feb. 4)
                 , turnCW(90)
                 , drive(15)
                 , turnCCW(90)
@@ -24,7 +24,7 @@ public class AutoRedBlueOld extends AutoCommandOpMode {
                 , drive(9)
                 /* do something with the arm*/
                 , armBottom
-                , grab
+                //, grab NOTE: Original function has been removed (Feb. 4)
                 , arm0
 
                 /*step 3: go to board*/

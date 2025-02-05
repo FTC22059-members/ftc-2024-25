@@ -41,10 +41,6 @@ public class AutoCommandOpMode extends CommandOpMode
     public ArmToPosition arm60;
     public ArmToPosition armBottom;
 
-    public MoveWristTo wristLeft;
-    public MoveWristTo wristCenter;
-    public MoveWristTo wristRight;
-
     public MoveWristTo gripHold;
     public MoveWristTo gripRelease;
 
@@ -52,9 +48,6 @@ public class AutoCommandOpMode extends CommandOpMode
     public MoveLinearSlideToPos lsBottom;
     public MoveLinearSlideToPos lsSpeci;
     public MoveLinearSlideToPos lsBack;
-
-    public IntakeForTimeCmd grab;
-    public IntakeForTimeCmd outtake;
 
     @Override
     public void initialize() {
@@ -76,11 +69,6 @@ public class AutoCommandOpMode extends CommandOpMode
         arm65 = new ArmToPosition(arm, 65, drive, false);
         arm60 = new ArmToPosition(arm, 60, drive, false);
 
-
-        wristLeft = new MoveWristTo(wristSub, Constants.WristConstants.wristLeft, telemetry);
-        wristCenter = new MoveWristTo(wristSub, Constants.WristConstants.wristCenter, telemetry);
-        wristRight = new MoveWristTo(wristSub, Constants.WristConstants.wristRight, telemetry);
-
         gripHold = new MoveWristTo(wristSub, Constants.GrabberConstants.wristGrip, telemetry);
         gripRelease = new MoveWristTo(wristSub, Constants.GrabberConstants.wristRelease, telemetry);
 
@@ -88,9 +76,6 @@ public class AutoCommandOpMode extends CommandOpMode
         lsBottom = new MoveLinearSlideToPos(linearSlideSub,0,0.5,telemetry);
         lsSpeci = new MoveLinearSlideToPos(linearSlideSub, Constants.LinearSlideConstants.lsSpeci,0.5,telemetry);
         lsBack = new MoveLinearSlideToPos(linearSlideSub, Constants.LinearSlideConstants.lsBack,0.5,telemetry);
-
-        grab = new IntakeForTimeCmd(intakeSub,0.8,1000, false /*dont ask why this needs to be false*/);
-        outtake = new IntakeForTimeCmd(intakeSub,0.8,1000, true);
 
         while(opModeInInit()){
             telemetry.update();
