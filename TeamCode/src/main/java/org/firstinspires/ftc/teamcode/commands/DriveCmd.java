@@ -4,8 +4,6 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-
 import org.firstinspires.ftc.teamcode.subsystems.DrivetrainSub;
 
 import java.util.function.BooleanSupplier;
@@ -57,6 +55,7 @@ public class DriveCmd extends CommandBase {
         double brakeMultiplier = 1;
         double rightTrigger = this.rightTrigger.getAsDouble();
         double leftTrigger = this.leftTrigger.getAsDouble();
+
 
         if (leftTrigger > 0.05 && leftTrigger < 0.75) {
             brakeMultiplier = (1 - leftTrigger)/2;

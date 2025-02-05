@@ -9,20 +9,23 @@ import org.firstinspires.ftc.teamcode.commands.ArmPower0;
 public class AutoSpeci extends AutoCommandOpMode {
     public void logic() {
         schedule(new SequentialCommandGroup(
-                  arm0
-                , wristCenter
-                , drive(20)
-                , arm25
+                  //arm0
+                /*,*/ gripHold
+                , drive(1)
+                , arm65
+                , drive(24)
                 , lsSpeci
-                , arm37
-                , driveSlow(-10)
+                , arm60
+                //, driveSlow(-10)
+                , lsBack
+                //, wristRight
+                , gripRelease
                 , lsBottom
-                , wristRight
                 , arm0
                 , turnCCW(90)
                 , drive(-32)
                 , turnCW(90)
-                , drive(-12)
+                , drive(-24)
                 , new ArmPower0(arm)
         ));
     }
