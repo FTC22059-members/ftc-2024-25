@@ -10,20 +10,22 @@ import org.firstinspires.ftc.teamcode.commands.ArmPower0;
 public class AutoBucketA3 extends AutoCommandOpMode {
     public void logic() {
         schedule(new SequentialCommandGroup(
-                drive(16)
+                gripHold
+                , drive(16)
                 , arm0
-                , wristCenter
+                //, wristCenter
                 , turnCCW(85)
                 , drive(26)
                 , turnCCW(45)
-                , drive(10)
+                , drive(4)
                 , new ArmLowGoal(arm,telemetry)
                 , lsLowGoal
-                , outtake
+                , gripRelease
+                //, outtake
                 , lsBottom
-                , wristRight
+                //, wristRight
                 , armBottom
-                , drive(-10)
+                , drive(-4)
                 , turnCW(45)
                 , drive(-84)
                 , turnCW(90)
