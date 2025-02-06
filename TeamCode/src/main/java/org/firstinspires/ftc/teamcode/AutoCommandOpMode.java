@@ -56,7 +56,7 @@ public class AutoCommandOpMode extends CommandOpMode
         imu = new ImuSub(hardwareMap, telemetry);
         wristSub = new WristSub(hardwareMap,telemetry);
         linearSlideSub = new LinearSlideSub(hardwareMap, telemetry);
-        intakeSub = new IntakeSub(hardwareMap, telemetry);
+//        intakeSub = new IntakeSub(hardwareMap, telemetry);
 
         arm = new ArmSub(hardwareMap, telemetry);
         armLow = new ArmLow(arm, telemetry);

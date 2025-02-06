@@ -31,7 +31,7 @@ public final class Constants {
     public static final class ArmConstants {
         public static final int armLow = 50;
         public static final int armMed = 150;
-        public static final int armLowGoal = 545;
+        public static final int armLowGoal = 580;
         public static final int armHighGoal = 600; //TODO: Need to determine correct value.
     }
 }
