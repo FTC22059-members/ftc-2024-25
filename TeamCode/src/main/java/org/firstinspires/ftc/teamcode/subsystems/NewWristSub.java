@@ -11,7 +11,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class NewWristSub extends SubsystemBase {
     Telemetry telemetry;
 
-    public CRServo intake;
     private Servo wrist;
 
     public NewWristSub(HardwareMap hardwareMap, Telemetry tm) {
@@ -21,11 +20,11 @@ public class NewWristSub extends SubsystemBase {
 
     @Override
     public void periodic() {
-
+        telemetry.addData("Wrist position: ", wrist.getPosition());
     }
 
-    public Servo getServo(){
-        return wrist;
+    public double getPos(){
+        return wrist.getPosition();
     }
 
     public void setPos(double pos) {

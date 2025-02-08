@@ -3,31 +3,31 @@ package org.firstinspires.ftc.teamcode.commands;
 import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.subsystems.WristSub;
+import org.firstinspires.ftc.teamcode.subsystems.GripperSub;
 /**
 
  * This command is dedicated to a command that controls the wrist for the Tele-op mode
  */
 
-public class MoveWristBadlyUp extends CommandBase {
+public class GripperClose extends CommandBase {
 
-    private final WristSub wristSub;
+    private final GripperSub gripperSub;
     private final Telemetry telemetry;
     /**
      * This command deals with the wrist in teleop.
      *
-     * @param wristSubParam The wrist sub to be imported
+     * @param gripperSubParam The wrist sub to be imported
      */
 
-    public MoveWristBadlyUp(WristSub wristSubParam, Telemetry telemetry) {
-        this.wristSub = wristSubParam;
+    public GripperClose(GripperSub gripperSubParam, Telemetry telemetry) {
+        this.gripperSub = gripperSubParam;
         this.telemetry = telemetry;
-        addRequirements(this.wristSub);
+        addRequirements(this.gripperSub);
     }
 
     @Override
     public void execute() {
-        wristSub.setPosition(wristSub.getPosition() + 0.05);
+        gripperSub.setPosition(gripperSub.getPosition() + 0.05);
     }
 
     @Override
