@@ -4,7 +4,7 @@ import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Constants;
-import org.firstinspires.ftc.teamcode.subsystems.WristSub;
+import org.firstinspires.ftc.teamcode.subsystems.GripperSub;
 
 /**
  * This command is dedicated to a command that controls the wrist for the Tele-op mode
@@ -12,34 +12,34 @@ import org.firstinspires.ftc.teamcode.subsystems.WristSub;
 
 public class MoveWristRight extends CommandBase {
 
-    private final WristSub wristSub;
+    private final GripperSub gripperSub;
     private final Telemetry telemetry;
 
     /**
      * This command deals with the wrist in teleop.
      *
-     * @param wristSubParam The wrist sub to be imported
+     * @param gripperSubParam The wrist sub to be imported
      */
 
-    public MoveWristRight(WristSub wristSubParam, Telemetry telemetry){
-        this.wristSub = wristSubParam;
+    public MoveWristRight(GripperSub gripperSubParam, Telemetry telemetry){
+        this.gripperSub = gripperSubParam;
         this.telemetry = telemetry;
-        addRequirements(this.wristSub);
+        addRequirements(this.gripperSub);
     }
 
     @Override
    public void execute() {
-        double wristPosition = this.wristSub.getPosition();
+        double wristPosition = this.gripperSub.getPosition();
 
 //        if ((wristPosition != Constants.WristConstants.wristRight) && (wristPosition != Constants.WristConstants.wristCenter) && (wristPosition != Constants.WristConstants.wristLeft)) {
 //            this.wristSub.setPosition(Constants.WristConstants.wristCenter);
 //        }
 
         if (wristPosition == Constants.WristConstants.wristLeft){
-            this.wristSub.setPosition(Constants.WristConstants.wristCenter);
+            this.gripperSub.setPosition(Constants.WristConstants.wristCenter);
             telemetry.addData("Wrist moved to center", wristPosition);
         } else if(wristPosition == Constants.WristConstants.wristCenter){
-            this.wristSub.setPosition(Constants.WristConstants.wristRight);
+            this.gripperSub.setPosition(Constants.WristConstants.wristRight);
             telemetry.addData("Wrist moved to right", wristPosition);
 
         }

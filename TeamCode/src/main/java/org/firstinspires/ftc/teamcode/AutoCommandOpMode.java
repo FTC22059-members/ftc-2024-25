@@ -7,9 +7,9 @@ import org.firstinspires.ftc.teamcode.commands.ArmLow;
 import org.firstinspires.ftc.teamcode.commands.ArmLowGoal;
 import org.firstinspires.ftc.teamcode.commands.ArmToPosition;
 import org.firstinspires.ftc.teamcode.commands.DriveDistanceCmd;
-import org.firstinspires.ftc.teamcode.commands.IntakeForTimeCmd;
 import org.firstinspires.ftc.teamcode.commands.MoveLinearSlideToPos;
-import org.firstinspires.ftc.teamcode.commands.MoveWristTo;
+import org.firstinspires.ftc.teamcode.commands.GripperMove;
+import org.firstinspires.ftc.teamcode.commands.MoveWrist;
 import org.firstinspires.ftc.teamcode.commands.TurnCmd;
 import org.firstinspires.ftc.teamcode.commands.ArmMed;
 import org.firstinspires.ftc.teamcode.subsystems.DrivetrainSub;
@@ -17,7 +17,8 @@ import org.firstinspires.ftc.teamcode.subsystems.ImuSub;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSub;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSub;
 import org.firstinspires.ftc.teamcode.subsystems.LinearSlideSub;
-import org.firstinspires.ftc.teamcode.subsystems.WristSub;
+import org.firstinspires.ftc.teamcode.subsystems.GripperSub;
+import org.firstinspires.ftc.teamcode.subsystems.NewWristSub;
 
 public class AutoCommandOpMode extends CommandOpMode
 {
@@ -26,9 +27,10 @@ public class AutoCommandOpMode extends CommandOpMode
 
     protected DrivetrainSub drive;
     protected ImuSub imu;
-    protected WristSub wristSub;
+    protected GripperSub gripperSub;
     protected LinearSlideSub linearSlideSub;
     protected IntakeSub intakeSub;
+    protected NewWristSub wristSub;
 
     protected ArmSub arm;
     private ArmLow armLow;
@@ -41,56 +43,46 @@ public class AutoCommandOpMode extends CommandOpMode
     public ArmToPosition arm60;
     public ArmToPosition armBottom;
 
-    public MoveWristTo wristLeft;
-    public MoveWristTo wristCenter;
-    public MoveWristTo wristRight;
-
-    public MoveWristTo gripHold;
-    public MoveWristTo gripRelease;
+    public GripperMove gripHold;
+    public GripperMove gripRelease;
 
     public MoveLinearSlideToPos lsLowGoal;
     public MoveLinearSlideToPos lsBottom;
     public MoveLinearSlideToPos lsSpeci;
     public MoveLinearSlideToPos lsBack;
 
-    public IntakeForTimeCmd grab;
-    public IntakeForTimeCmd outtake;
+    public MoveWrist wrist01;
+    public MoveWrist wrist04;
 
     @Override
     public void initialize() {
         //Initializing Hardware
         drive = new DrivetrainSub(hardwareMap, telemetry);
         imu = new ImuSub(hardwareMap, telemetry);
-        wristSub = new WristSub(hardwareMap,telemetry);
-        linearSlideSub = new LinearSlideSub(hardwareMap, telemetry);
-        intakeSub = new IntakeSub(hardwareMap, telemetry);
 
         arm = new ArmSub(hardwareMap, telemetry);
         armLow = new ArmLow(arm, telemetry);
         armLowGoal = new ArmLowGoal(arm, telemetry);
         armMed = new ArmMed(arm, drive);
         armHighGoal = new ArmHighGoal(arm, drive);
-
         arm0 = new ArmToPosition(arm, 0.0, drive, true);
         armBottom = new ArmToPosition(arm, -27, drive, true);
         arm65 = new ArmToPosition(arm, 65, drive, false);
         arm60 = new ArmToPosition(arm, 60, drive, false);
 
+        gripperSub = new GripperSub(hardwareMap,telemetry);
+        gripHold = new GripperMove(gripperSub, Constants.GrabberConstants.wristGrip, telemetry);
+        gripRelease = new GripperMove(gripperSub, Constants.GrabberConstants.wristRelease, telemetry);
 
-        wristLeft = new MoveWristTo(wristSub, Constants.WristConstants.wristLeft, telemetry);
-        wristCenter = new MoveWristTo(wristSub, Constants.WristConstants.wristCenter, telemetry);
-        wristRight = new MoveWristTo(wristSub, Constants.WristConstants.wristRight, telemetry);
-
-        gripHold = new MoveWristTo(wristSub, Constants.GrabberConstants.wristGrip, telemetry);
-        gripRelease = new MoveWristTo(wristSub, Constants.GrabberConstants.wristRelease, telemetry);
-
+        linearSlideSub = new LinearSlideSub(hardwareMap, telemetry);
         lsLowGoal = new MoveLinearSlideToPos(linearSlideSub, (int)Constants.LinearSlideConstants.lsLowGoalConstant,0.5,telemetry);
         lsBottom = new MoveLinearSlideToPos(linearSlideSub,0,0.5,telemetry);
         lsSpeci = new MoveLinearSlideToPos(linearSlideSub, Constants.LinearSlideConstants.lsSpeci,0.5,telemetry);
         lsBack = new MoveLinearSlideToPos(linearSlideSub, Constants.LinearSlideConstants.lsBack,0.5,telemetry);
 
-        grab = new IntakeForTimeCmd(intakeSub,0.8,1000, false /*dont ask why this needs to be false*/);
-        outtake = new IntakeForTimeCmd(intakeSub,0.8,1000, true);
+        wristSub = new NewWristSub(hardwareMap, telemetry);
+        wrist01 = new MoveWrist(wristSub, telemetry, 0.1);
+        wrist04 = new MoveWrist(wristSub, telemetry, 0.4);
 
         while(opModeInInit()){
             telemetry.update();

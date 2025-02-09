@@ -4,21 +4,21 @@ import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.commands.ArmPower0;
+import org.firstinspires.ftc.teamcode.commands.MoveWristIncrement;
 
 @Autonomous(name = "Auto Specimen (A4, left edge)")
 public class AutoSpeci extends AutoCommandOpMode {
     public void logic() {
         schedule(new SequentialCommandGroup(
-                  //arm0
-                /*,*/ gripHold
-                , drive(1)
+                  gripHold
+                , drive(3)
                 , arm65
-                , drive(24)
+                , wrist01
+                , drive(22)
                 , lsSpeci
                 , arm60
-                //, driveSlow(-10)
                 , lsBack
-                //, wristRight
+                , wrist04
                 , gripRelease
                 , lsBottom
                 , arm0

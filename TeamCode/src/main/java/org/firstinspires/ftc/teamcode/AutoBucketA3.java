@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.commands.ArmLowGoal;
 import org.firstinspires.ftc.teamcode.commands.ArmPower0;
+import org.firstinspires.ftc.teamcode.commands.Pause;
 
 @Autonomous(name = "Auto Bucket (A3, left edge)")
 public class AutoBucketA3 extends AutoCommandOpMode {
@@ -12,22 +13,19 @@ public class AutoBucketA3 extends AutoCommandOpMode {
         schedule(new SequentialCommandGroup(
                 gripHold
                 , drive(16)
-                , arm0
-                //, wristCenter
                 , turnCCW(85)
-                , drive(26)
+                , drive(28)
                 , turnCCW(45)
-                , drive(4)
+                , drive(9)
                 , new ArmLowGoal(arm,telemetry)
+                , new Pause(2000)
                 , lsLowGoal
                 , gripRelease
-                //, outtake
                 , lsBottom
-                //, wristRight
                 , armBottom
-                , drive(-4)
+                , drive(-9)
                 , turnCW(45)
-                , drive(-84)
+                , drive(-86)
                 , turnCW(90)
                 , drive(-18)
                 , new ArmPower0(arm)

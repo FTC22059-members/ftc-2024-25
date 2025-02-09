@@ -5,21 +5,19 @@ import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Gamepad;
 
-import org.firstinspires.ftc.teamcode.commands.ArmDown;
 import org.firstinspires.ftc.teamcode.commands.ArmHighGoal;
 import org.firstinspires.ftc.teamcode.commands.ArmLow;
 import org.firstinspires.ftc.teamcode.commands.ArmLowGoal;
 import org.firstinspires.ftc.teamcode.commands.ArmMed;
 import org.firstinspires.ftc.teamcode.commands.DriveCmd;
-import org.firstinspires.ftc.teamcode.commands.DriveRecordCmd;
 import org.firstinspires.ftc.teamcode.commands.IntakeCmd;
 import org.firstinspires.ftc.teamcode.commands.MoveArm;
 import org.firstinspires.ftc.teamcode.commands.MoveLinearSlide;
+import org.firstinspires.ftc.teamcode.commands.MoveWristIncrement;
 import org.firstinspires.ftc.teamcode.commands.ResetLinearSlide;
-import org.firstinspires.ftc.teamcode.commands.MoveWristBadlyDown;
-import org.firstinspires.ftc.teamcode.commands.MoveWristBadlyUp;
+import org.firstinspires.ftc.teamcode.commands.GripperOpen;
+import org.firstinspires.ftc.teamcode.commands.GripperClose;
 import org.firstinspires.ftc.teamcode.commands.MoveWristLeft;
 import org.firstinspires.ftc.teamcode.commands.MoveWristRight;
 import org.firstinspires.ftc.teamcode.commands.TurnCmd;
@@ -28,7 +26,8 @@ import org.firstinspires.ftc.teamcode.subsystems.DrivetrainSub;
 import org.firstinspires.ftc.teamcode.subsystems.ImuSub;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSub;
 import org.firstinspires.ftc.teamcode.subsystems.LinearSlideSub;
-import org.firstinspires.ftc.teamcode.subsystems.WristSub;
+import org.firstinspires.ftc.teamcode.subsystems.NewWristSub;
+import org.firstinspires.ftc.teamcode.subsystems.GripperSub;
 
 
 @TeleOp(name = "Tele-op 2024-25")
@@ -38,7 +37,7 @@ public class TeleOp25 extends CommandOpMode {
     private GamepadEx toolOp;
 
     private DrivetrainSub drive;
-    private DriveRecordCmd driveCmd;
+    private DriveCmd driveCmd;
     private boolean fieldCentric = false;
     private ImuSub robotImu;
 
@@ -47,7 +46,7 @@ public class TeleOp25 extends CommandOpMode {
     private IntakeCmd intakeOut;
     private IntakeCmd intakeOff;
 
-    private WristSub wrist;
+    private GripperSub gripper;
     private MoveWristLeft wristLeft;
     private MoveWristRight wristRight;
 
@@ -62,12 +61,15 @@ public class TeleOp25 extends CommandOpMode {
     private MoveLinearSlide linearSlideUp;
     private MoveLinearSlide linearSlideDown;
     private MoveLinearSlide linearSlideOff;
-    private MoveWristBadlyUp wristUp;
-    private MoveWristBadlyDown wristDown;
+    private GripperClose gripperClose;
+    private GripperOpen gripperOpen;
     private MoveLinearSlide moveLinearSlide;
     private ResetLinearSlide resetLinearSlide;
     private TurnCmd turnCW;
     private TurnCmd turnCCW;
+    private NewWristSub newWrist;
+    private MoveWristIncrement moveWristIncrementLeft;
+    private MoveWristIncrement moveWristIncrementRight;
 
 
     @Override
@@ -81,7 +83,7 @@ public class TeleOp25 extends CommandOpMode {
         // MOTOR SYSTEMS
         // Drive
         drive = new DrivetrainSub(hardwareMap, telemetry);
-        driveCmd = new DriveRecordCmd(drive, this::rightTrigger, this::leftTrigger, driverOp::getLeftX, driverOp::getLeftY, driverOp::getRightX, driverOp::getRightY, robotImu::getAngle, this::getFieldCentric, telemetry);
+        driveCmd = new DriveCmd(drive, this::rightTrigger, this::leftTrigger, driverOp::getLeftX, driverOp::getLeftY, driverOp::getRightX, driverOp::getRightY, robotImu::getAngle, this::getFieldCentric);
 
         turnCW = new TurnCmd(-90, 0.4, drive, robotImu, telemetry);
         turnCCW = new TurnCmd(90, 0.4, drive, robotImu, telemetry);
@@ -128,29 +130,22 @@ public class TeleOp25 extends CommandOpMode {
 
 
         // SERVO SYSTEMS
-        // Intake
-        intake = new IntakeSub(hardwareMap, telemetry);
-        intakeIn = new IntakeCmd(intake, 1.0);
-        intakeOut = new IntakeCmd(intake, -1.0);
-        intakeOff = new IntakeCmd(intake, 0.0);
 
-        toolOp.getGamepadButton(GamepadKeys.Button.A).whenPressed(intakeIn);
-        toolOp.getGamepadButton(GamepadKeys.Button.A).whenReleased(intakeOff);
-        toolOp.getGamepadButton(GamepadKeys.Button.X).whenPressed(intakeOut);
-        toolOp.getGamepadButton(GamepadKeys.Button.X).whenReleased(intakeOff);
+        // New Wrist
+        newWrist = new NewWristSub(hardwareMap, telemetry);
+        moveWristIncrementLeft = new MoveWristIncrement(newWrist, telemetry, 0.1);
+        moveWristIncrementRight = new MoveWristIncrement(newWrist, telemetry, -0.1);
 
-        toolOp.getGamepadButton(GamepadKeys.Button.B).whenPressed(resetLinearSlide);
+        toolOp.getGamepadButton(GamepadKeys.Button.A).whenPressed(moveWristIncrementLeft);
+        toolOp.getGamepadButton(GamepadKeys.Button.X).whenPressed(moveWristIncrementRight);
 
-        // Wrist
-        wrist = new WristSub(hardwareMap, telemetry);
-        //wristRight = new MoveWristRight(wrist, telemetry);
-        //wristLeft = new MoveWristLeft(wrist, telemetry);
+        // Gripper
+        gripper = new GripperSub(hardwareMap, telemetry);
+        gripperClose = new GripperClose(gripper, telemetry);
+        gripperOpen = new GripperOpen(gripper, telemetry);
 
-        wristUp = new MoveWristBadlyUp(wrist, telemetry);
-        wristDown = new MoveWristBadlyDown(wrist, telemetry);
-
-        toolOp.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(wristUp);
-        toolOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(wristDown);
+        toolOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(gripperClose);
+        toolOp.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(gripperOpen);
 
 
 
@@ -161,7 +156,7 @@ public class TeleOp25 extends CommandOpMode {
         super.run();
 
         telemetry.addData("Field Centric?", fieldCentric);
-        telemetry.addData("Wrist Position", wrist.getPosition());
+        telemetry.addData("Gripper Position", gripper.getPosition());
 //        telemetry.addData("Linear Slide Position", linearSlideSub.getMotor().getCurrentPosition());
 
 
