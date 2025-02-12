@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.commands.ArmLow;
 import org.firstinspires.ftc.teamcode.commands.ArmLowGoal;
 import org.firstinspires.ftc.teamcode.commands.ArmMed;
 import org.firstinspires.ftc.teamcode.commands.DriveCmd;
+import org.firstinspires.ftc.teamcode.commands.DriveRecordCmd;
 import org.firstinspires.ftc.teamcode.commands.IntakeCmd;
 import org.firstinspires.ftc.teamcode.commands.MoveArm;
 import org.firstinspires.ftc.teamcode.commands.MoveLinearSlide;
@@ -37,7 +38,7 @@ public class TeleOp25 extends CommandOpMode {
     private GamepadEx toolOp;
 
     private DrivetrainSub drive;
-    private DriveCmd driveCmd;
+    private DriveRecordCmd driveCmd;
     private boolean fieldCentric = false;
     private ImuSub robotImu;
 
@@ -83,7 +84,7 @@ public class TeleOp25 extends CommandOpMode {
         // MOTOR SYSTEMS
         // Drive
         drive = new DrivetrainSub(hardwareMap, telemetry);
-        driveCmd = new DriveCmd(drive, this::rightTrigger, this::leftTrigger, driverOp::getLeftX, driverOp::getLeftY, driverOp::getRightX, driverOp::getRightY, robotImu::getAngle, this::getFieldCentric);
+        driveCmd = new DriveRecordCmd(drive, this::rightTrigger, this::leftTrigger, driverOp::getLeftX, driverOp::getLeftY, driverOp::getRightX, driverOp::getRightY, robotImu::getAngle, this::getFieldCentric, telemetry);
 
         turnCW = new TurnCmd(-90, 0.4, drive, robotImu, telemetry);
         turnCCW = new TurnCmd(90, 0.4, drive, robotImu, telemetry);

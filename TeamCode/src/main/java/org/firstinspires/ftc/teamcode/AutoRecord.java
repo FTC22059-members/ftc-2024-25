@@ -35,8 +35,7 @@ public class AutoRecord extends CommandOpMode {
         drive = new DrivetrainSub(hardwareMap, telemetry);
 
         try {
-//            reader = new BufferedReader(new FileReader("/storage/self/primary/AutoLogs/1737499403.txt"));
-            reader = new BufferedReader(new FileReader("/storage/emulated/0/AutoLogs/Auto.txt"));
+            reader = new BufferedReader(new FileReader("/storage/self/primary/AutoLogs/1737499403.txt"));
             line = reader.readLine();
             boolean endLoop = false;
 
@@ -64,14 +63,10 @@ public class AutoRecord extends CommandOpMode {
                     break;
                 }
 
-
-
                 gamepadRecord[doubleDrive[0].intValue()][0] = doubleDrive[1];
                 gamepadRecord[doubleDrive[0].intValue()][1] = doubleDrive[2];
-                gamepadRecord[doubleDrive[0].intValue()][2] = doubleDrive[3];
+                gamepadRecord[doubleDrive[0].intValue()][2] = doubleDrive[3]*-1;
                 gamepadRecord[doubleDrive[0].intValue()][3] = doubleDrive[0];
-
-
 
                 // read next line
                 line = reader.readLine();
@@ -96,24 +91,16 @@ public class AutoRecord extends CommandOpMode {
         System.out.println(Arrays.deepToString(gamepadTimeline));
 
         System.out.println("driveset: completed arrayifing!");
-
-        /*driveCmd = new DriveCmd(drive, null, null,
-                () -> driveSet[(int)(System.currentTimeMillis()-startTime)][1],
-                () -> driveSet[(int)(System.currentTimeMillis()-startTime)][0],
-                () -> driveSet[(int)(System.currentTimeMillis()-startTime)][2],
-                () -> 0.0, () -> 0.0, () -> false);
-    */}
+    }
 
     public void run(){
         if(startTime==-1){
             startTime=System.currentTimeMillis();
         }
 
-        //schedule(driveCmd);
         drive.move(gamepadTimeline[(int)(System.currentTimeMillis()-startTime)][1],
                 gamepadTimeline[(int)(System.currentTimeMillis()-startTime)][2],
                 gamepadTimeline[(int)(System.currentTimeMillis()-startTime)][0]);
-        //System.out.println(Arrays.toString(driveSet[(int) (System.currentTimeMillis() - startTime)]));
 
     }
 }

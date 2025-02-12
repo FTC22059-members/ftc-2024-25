@@ -68,6 +68,7 @@ public class DriveRecordCmd extends CommandBase {
 
         try {
             log = new FileWriter(directoryPath+"/"+(long)startTime/1000+".txt");
+            //log = new FileWriter(directoryPath+"/DEBUG.txt");
             log.write("[0.0, 0.0, 0.0, 0.0], \n");
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
