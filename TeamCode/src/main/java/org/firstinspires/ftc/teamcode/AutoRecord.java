@@ -53,11 +53,9 @@ public class AutoRecord extends CommandOpMode {
             line = reader.readLine();
             boolean endLoop = false;
 
-            System.out.println("I'M INSANE PART 1");
 
             while (!Objects.equals(line, "STOP")) {
 
-                System.out.println("I'M INSANE PART 2");
 
                 //get rid of square brackets for easier parsing
                 try {
@@ -71,7 +69,6 @@ public class AutoRecord extends CommandOpMode {
                 //make a line into an array
                 String[] stringDrive = line.split("[,]");
 
-                System.out.println("I'M INSANE PART 3");
 
 
                 //convert strings to doubles
@@ -84,14 +81,12 @@ public class AutoRecord extends CommandOpMode {
                     }
                 }
 
-                System.out.println("I'M INSANE PART 4");
 
                 if (endLoop){
                     break;
                 }
 
 
-                System.out.println("I'M INSANE PART 5");
 
                 gamepadRecord[doubleDrive[0].intValue()][0] = doubleDrive[1];
                 gamepadRecord[doubleDrive[0].intValue()][1] = doubleDrive[2];
@@ -101,7 +96,6 @@ public class AutoRecord extends CommandOpMode {
                 gamepadRecord[doubleDrive[0].intValue()][5] = doubleDrive[5];
                 gamepadRecord[doubleDrive[0].intValue()][6] = doubleDrive[6];
                 gamepadRecord[doubleDrive[0].intValue()][7] = doubleDrive[7];
-                System.out.println("JESUS HELP ME");
                 System.out.println(Arrays.toString(doubleDrive));
 
 
