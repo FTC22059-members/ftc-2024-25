@@ -79,75 +79,80 @@ public class TeleOp25 extends CommandOpMode {
 
         driverOp = new GamepadEx(gamepad1);
         toolOp = new GamepadEx(gamepad2);
+        linearSlideSub = new LinearSlideSub(hardwareMap, telemetry);
+        armSub = new ArmSub(hardwareMap, telemetry);
+        newWrist = new NewWristSub(hardwareMap, telemetry);
+        gripper = new GripperSub(hardwareMap, telemetry);
+
+
 
 
         // MOTOR SYSTEMS
         // Drive
         drive = new DrivetrainSub(hardwareMap, telemetry);
-        driveCmd = new DriveRecordCmd(drive, this::rightTrigger, this::leftTrigger, driverOp::getLeftX, driverOp::getLeftY, driverOp::getRightX, driverOp::getRightY, robotImu::getAngle, this::getFieldCentric, telemetry);
-
-        turnCW = new TurnCmd(-90, 0.4, drive, robotImu, telemetry);
-        turnCCW = new TurnCmd(90, 0.4, drive, robotImu, telemetry);
-
-        driverOp.getGamepadButton(GamepadKeys.Button.Y)
-                .whenPressed(new InstantCommand(this::toggleFieldCentric));
-
-        driverOp.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
-                .whenPressed(turnCCW);
-        driverOp.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
-                .whenPressed(turnCCW);
-
+        driveCmd = new DriveRecordCmd(drive, armSub, linearSlideSub, newWrist, gripper, this::rightTrigger, this::leftTrigger, driverOp::getLeftX, driverOp::getLeftY, driverOp::getRightX, driverOp::getRightY, robotImu::getAngle, toolOp::getLeftY, toolOp::getRightY, this::buttonToolA, this::buttonToolX, this::leftToolTrigger, this::rightToolTrigger, this::getFieldCentric, telemetry);
+//        turnCW = new TurnCmd(-90, 0.4, drive, robotImu, telemetry);
+//        turnCCW = new TurnCmd(90, 0.4, drive, robotImu, telemetry);
+//
+//        driverOp.getGamepadButton(GamepadKeys.Button.Y)
+//                .whenPressed(new InstantCommand(this::toggleFieldCentric));
+//
+//        driverOp.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
+//                .whenPressed(turnCCW);
+//        driverOp.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
+//                .whenPressed(turnCCW);
+//
         register(drive);
         drive.setDefaultCommand(driveCmd);
-
-        driverOp.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
-
-        // Linear Slide
-        linearSlideSub = new LinearSlideSub(hardwareMap, telemetry);
-        moveLinearSlide = new MoveLinearSlide(linearSlideSub, toolOp::getRightY, telemetry);
-        resetLinearSlide = new ResetLinearSlide(linearSlideSub);
-
-        register(linearSlideSub);
-        linearSlideSub.setDefaultCommand(moveLinearSlide);
-
-
-        // Arm
-        armSub = new ArmSub(hardwareMap, telemetry);
-        moveArm = new MoveArm(armSub, toolOp::getLeftY, telemetry);
-        armLow = new ArmLow(armSub, telemetry);
-        armMed = new ArmMed(armSub, telemetry);
-        armLowGoal = new ArmLowGoal(armSub, telemetry);
-        armHighGoal = new ArmHighGoal(armSub, telemetry);
-
-
-        toolOp.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(armLow);
-        toolOp.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(armMed);
-        toolOp.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(armLowGoal);
-        toolOp.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(armHighGoal);
-
-        register(armSub);
-        armSub.setDefaultCommand(moveArm);
-
-
-
-        // SERVO SYSTEMS
-
-        // New Wrist
-        newWrist = new NewWristSub(hardwareMap, telemetry);
-        moveWristIncrementLeft = new MoveWristIncrement(newWrist, telemetry, 0.1);
-        moveWristIncrementRight = new MoveWristIncrement(newWrist, telemetry, -0.1);
-
-        toolOp.getGamepadButton(GamepadKeys.Button.A).whenPressed(moveWristIncrementLeft);
-        toolOp.getGamepadButton(GamepadKeys.Button.X).whenPressed(moveWristIncrementRight);
-
-        // Gripper
-        gripper = new GripperSub(hardwareMap, telemetry);
-        gripperClose = new GripperClose(gripper, telemetry);
-        gripperOpen = new GripperOpen(gripper, telemetry);
-
-        toolOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(gripperClose);
-        toolOp.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(gripperOpen);
-
+//
+//        driverOp.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
+//
+//        // Linear Slide
+//        linearSlideSub = new LinearSlideSub(hardwareMap, telemetry);
+//        moveLinearSlide = new MoveLinearSlide(linearSlideSub, toolOp::getRightY, telemetry);
+//        resetLinearSlide = new ResetLinearSlide(linearSlideSub);
+//
+//        register(linearSlideSub);
+//        linearSlideSub.setDefaultCommand(moveLinearSlide);
+//
+//
+//        // Arm
+//        armSub = new ArmSub(hardwareMap, telemetry);
+//        moveArm = new MoveArm(armSub, toolOp::getLeftY, telemetry);
+//        armLow = new ArmLow(armSub, telemetry);
+//        armMed = new ArmMed(armSub, telemetry);
+//        armLowGoal = new ArmLowGoal(armSub, telemetry);
+//        armHighGoal = new ArmHighGoal(armSub, telemetry);
+//
+//
+//        toolOp.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(armLow);
+//        toolOp.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(armMed);
+//        toolOp.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(armLowGoal);
+//        toolOp.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(armHighGoal);
+//
+//        register(armSub);
+//        armSub.setDefaultCommand(moveArm);
+//
+//
+//
+//        // SERVO SYSTEMS
+//
+//        // New Wrist
+//        newWrist = new NewWristSub(hardwareMap, telemetry);
+//        moveWristIncrementLeft = new MoveWristIncrement(newWrist, telemetry, 0.1);
+//        moveWristIncrementRight = new MoveWristIncrement(newWrist, telemetry, -0.1);
+//
+//        toolOp.getGamepadButton(GamepadKeys.Button.A).whenPressed(moveWristIncrementLeft);
+//        toolOp.getGamepadButton(GamepadKeys.Button.X).whenPressed(moveWristIncrementRight);
+//
+//        // Gripper
+//        gripper = new GripperSub(hardwareMap, telemetry);
+//        gripperClose = new GripperClose(gripper, telemetry);
+//        gripperOpen = new GripperOpen(gripper, telemetry);
+//
+//        toolOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(gripperClose);
+//        toolOp.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(gripperOpen);
+//
 
 
     }
@@ -156,8 +161,8 @@ public class TeleOp25 extends CommandOpMode {
     public void run() {
         super.run();
 
-        telemetry.addData("Field Centric?", fieldCentric);
-        telemetry.addData("Gripper Position", gripper.getPosition());
+//        telemetry.addData("Field Centric?", fieldCentric);
+//        telemetry.addData("Gripper Position", gripper.getPosition());
 //        telemetry.addData("Linear Slide Position", linearSlideSub.getMotor().getCurrentPosition());
 
 
@@ -179,8 +184,12 @@ public class TeleOp25 extends CommandOpMode {
     public double rightTrigger() {
         return driverOp.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
     }
-
     public double leftTrigger() {
         return driverOp.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER);
     }
+    public boolean rightToolTrigger() {return toolOp.getButton(GamepadKeys.Button.RIGHT_BUMPER);}
+    public boolean leftToolTrigger() {return toolOp.getButton(GamepadKeys.Button.LEFT_BUMPER);}
+    public boolean buttonToolA() {return toolOp.getButton(GamepadKeys.Button.A);}
+    public boolean buttonToolX() {return toolOp.getButton(GamepadKeys.Button.X);}
+
 }
