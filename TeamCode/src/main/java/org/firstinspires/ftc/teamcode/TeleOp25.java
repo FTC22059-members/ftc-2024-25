@@ -137,22 +137,22 @@ public class TeleOp25 extends CommandOpMode {
 //
 //        // SERVO SYSTEMS
 //
-//        // New Wrist
-//        newWrist = new NewWristSub(hardwareMap, telemetry);
-//        moveWristIncrementLeft = new MoveWristIncrement(newWrist, telemetry, 0.1);
-//        moveWristIncrementRight = new MoveWristIncrement(newWrist, telemetry, -0.1);
-//
-//        toolOp.getGamepadButton(GamepadKeys.Button.A).whenPressed(moveWristIncrementLeft);
-//        toolOp.getGamepadButton(GamepadKeys.Button.X).whenPressed(moveWristIncrementRight);
-//
-//        // Gripper
-//        gripper = new GripperSub(hardwareMap, telemetry);
-//        gripperClose = new GripperClose(gripper, telemetry);
-//        gripperOpen = new GripperOpen(gripper, telemetry);
-//
-//        toolOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(gripperClose);
-//        toolOp.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(gripperOpen);
-//
+       // New Wrist
+       newWrist = new NewWristSub(hardwareMap, telemetry);
+       moveWristIncrementLeft = new MoveWristIncrement(newWrist, telemetry, 0.1);
+       moveWristIncrementRight = new MoveWristIncrement(newWrist, telemetry, -0.1);
+
+        toolOp.getGamepadButton(GamepadKeys.Button.A).whenPressed(moveWristIncrementLeft);
+        toolOp.getGamepadButton(GamepadKeys.Button.X).whenPressed(moveWristIncrementRight);
+
+        // Gripper
+        gripper = new GripperSub(hardwareMap, telemetry);
+        gripperClose = new GripperClose(gripper, telemetry);
+        gripperOpen = new GripperOpen(gripper, telemetry);
+
+        toolOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(gripperClose);
+        toolOp.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(gripperOpen);
+
 
 
     }

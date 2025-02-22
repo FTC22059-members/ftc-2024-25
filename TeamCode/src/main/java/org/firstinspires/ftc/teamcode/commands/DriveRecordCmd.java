@@ -91,8 +91,8 @@ public class DriveRecordCmd extends CommandBase {
         this.startTime=System.currentTimeMillis();
 
         try {
-//            log = new FileWriter(directoryPath+"/"+(long)startTime/1000+".txt");
-            log = new FileWriter("/storage/emulated/0/AutoLogs/DEBUG.txt");
+            log = new FileWriter(directoryPath+"/"+"Auto"+(long)((startTime/1000)-1740000000)+".txt");
+//            log = new FileWriter("/storage/emulated/0/AutoLogs/feb19.txt");
             log.write("[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], \n");
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
@@ -112,8 +112,8 @@ public class DriveRecordCmd extends CommandBase {
         double rightTrigger = this.rightTrigger.getAsDouble();
         double leftTrigger = this.leftTrigger.getAsDouble();
 
-        boolean wristUp = this.wristUp.getAsBoolean();
-        boolean wristDown = this.wristDown.getAsBoolean();
+//        boolean wristUp = this.wristUp.getAsBoolean();
+//        boolean wristDown = this.wristDown.getAsBoolean();
         boolean gripperOpen = this.grabberOpen.getAsBoolean();
         boolean gripperClose = this.grabberClose.getAsBoolean();
 
@@ -125,7 +125,8 @@ public class DriveRecordCmd extends CommandBase {
         currentState[3]=turnX;
         currentState[4]=armY;
         currentState[5]=linslideY;
-        currentState[6] = (wristUp ? 1 : 0) - (wristDown ? 1 : 0);
+        currentState[6]=wristSub.getPos();
+        //currentState[6] = (wristUp ? 1 : 0) - (wristDown ? 1 : 0);
         currentState[7] = (gripperOpen ? 1 : 0) - (gripperClose ? 1 : 0);
 
         telemetry.addData("Current State", Arrays.toString(currentState));
@@ -182,7 +183,7 @@ public class DriveRecordCmd extends CommandBase {
 
         linearslideSub.move(linslideY*-1);
 
-
+        /*
         if (gripperOpen) {
             gripperSub.setPosition(gripperSub.getPosition() - 0.05);
         } else if (gripperClose) {
@@ -194,6 +195,6 @@ public class DriveRecordCmd extends CommandBase {
             wristSub.setPos(wristSub.getPos() + 0.1);
         } else if (wristDown) {
             wristSub.setPos(wristSub.getPos() - 0.1);
-        }
+        }*/
     }
 }
