@@ -13,8 +13,8 @@ public class AutoSpeci extends AutoCommandOpMode {
                   gripHold
                 , drive(3)
                 , arm65
-                , wrist01
-                , drive(22)
+                , wrist07
+                , drive(18)
                 , lsSpeci
                 , arm60
                 , lsBack
@@ -23,7 +23,7 @@ public class AutoSpeci extends AutoCommandOpMode {
                 , lsBottom
                 , arm0
                 , turnCCW(90)
-                , drive(-32)
+                , drive(-36)
                 , turnCW(90)
                 , drive(-24)
                 , new ArmPower0(arm)

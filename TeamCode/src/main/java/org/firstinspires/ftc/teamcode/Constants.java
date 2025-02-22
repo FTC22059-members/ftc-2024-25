@@ -19,13 +19,13 @@ public final class Constants {
         public static final double upwardLimit = 2400;
         public static final double downwardLimit = 0;
         public static final double lsLowGoalConstant = 2200;
-        public static final int lsSpeci = 1600;
-        public static final int lsBack = 1230;
+        public static final int lsSpeci = 1800;
+        public static final int lsBack = 1430;
     }
 
     public static final class GrabberConstants{
-        public static final double wristGrip = 0.2;
-        public static final double wristRelease = 0;
+        public static final double wristGrip = 0.25;
+        public static final double wristRelease = 0.1;
     }
 
     public static final class ArmConstants {

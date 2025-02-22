@@ -14,7 +14,7 @@ public class AutoBucketA3 extends AutoCommandOpMode {
                 gripHold
                 , drive(16)
                 , turnCCW(85)
-                , drive(28)
+                , drive(25)
                 , turnCCW(45)
                 , drive(9)
                 , new ArmLowGoal(arm,telemetry)
@@ -25,7 +25,7 @@ public class AutoBucketA3 extends AutoCommandOpMode {
                 , armBottom
                 , drive(-9)
                 , turnCW(45)
-                , drive(-86)
+                , drive(-83)
                 , turnCW(90)
                 , drive(-18)
                 , new ArmPower0(arm)

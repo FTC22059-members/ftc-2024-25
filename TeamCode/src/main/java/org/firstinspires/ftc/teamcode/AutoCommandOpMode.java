@@ -53,6 +53,7 @@ public class AutoCommandOpMode extends CommandOpMode
 
     public MoveWrist wrist01;
     public MoveWrist wrist04;
+    public MoveWrist wrist07;
 
     @Override
     public void initialize() {
@@ -83,6 +84,7 @@ public class AutoCommandOpMode extends CommandOpMode
         wristSub = new NewWristSub(hardwareMap, telemetry);
         wrist01 = new MoveWrist(wristSub, telemetry, 0.1);
         wrist04 = new MoveWrist(wristSub, telemetry, 0.4);
+        wrist07 = new MoveWrist(wristSub, telemetry, 0.7);
 
         while(opModeInInit()){
             telemetry.update();
