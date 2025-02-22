@@ -3,10 +3,9 @@ package org.firstinspires.ftc.teamcode;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.teamcode.commands.DriveCmd;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSub;
 import org.firstinspires.ftc.teamcode.subsystems.DrivetrainSub;
-
-import org.firstinspires.ftc.teamcode.commands.DriveCmd;
 import org.firstinspires.ftc.teamcode.subsystems.GripperSub;
 import org.firstinspires.ftc.teamcode.subsystems.LinearSlideSub;
 import org.firstinspires.ftc.teamcode.subsystems.NewWristSub;
@@ -17,8 +16,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 
-@Autonomous(name = "Autonomous Record - 3 samples")
-public class AutoRecord extends CommandOpMode {
+@Autonomous(name = "Autonomous Record - 2 Specimens and a sample")
+public class AutoRecord2 extends CommandOpMode {
 
     private BufferedReader reader;
     private DriveCmd driveCmd;
@@ -48,7 +47,7 @@ public class AutoRecord extends CommandOpMode {
         wristSub = new NewWristSub(hardwareMap, telemetry);
 
         try {
-            reader = new BufferedReader(new FileReader("/storage/self/primary/AutoLogs/ThreePusher.txt"));
+            reader = new BufferedReader(new FileReader("/storage/self/primary/AutoLogs/TwoSpecimen.txt"));
 //            reader = new BufferedReader(new FileReader("/storage/emulated/0/AutoLogs/feb19.txt"));
             line = reader.readLine();
             boolean endLoop = false;
@@ -120,6 +119,14 @@ public class AutoRecord extends CommandOpMode {
         lastValue[6] = 0.0;
         lastValue[7] = 0.0;
 
+        // Get the maximum time in the recording
+        int maxTime = 0;
+        for (int i=0; i<=29999; i++){
+            if(gamepadRecord[i][0]!=null) {
+                maxTime = i;
+            }
+        }
+        System.out.println("maxTime = "+maxTime);
 
         for (int i=0; i<=29999; i++){
             if(gamepadRecord[i][0]!=null) {
