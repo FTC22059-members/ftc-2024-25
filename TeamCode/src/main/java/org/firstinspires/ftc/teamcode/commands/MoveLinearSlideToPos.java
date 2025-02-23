@@ -32,20 +32,20 @@ public class MoveLinearSlideToPos extends CommandBase {
     @Override
     public void execute() {
         if (this.power != null & this.finalPos != null){
-            telemetry.addLine("(lsToPos) Going to Pos " + this.finalPos + " at power " + power);
-            telemetry.addLine("current pos " + this.linearSlideSub.getPosition());
+            //telemetry.addLine("(lsToPos) Going to Pos " + this.finalPos + " at power " + power);
+            //telemetry.addLine("current pos " + this.linearSlideSub.getPosition());
             //System.out.println("(lsToPos) Going to Pos " + this.finalPos + " at power " + power);
             //System.out.println("(lsToPos) current pos " + this.linearSlideSub.getPosition());
             linearSlideSub.move(power);
-        }else if (this.power == null & this.finalPos != null){
+        }/*else if (this.power == null & this.finalPos != null){
             telemetry.addLine("(lsToPos) Power isn't set!");
         }else if (this.power != null & this.finalPos == null){
             telemetry.addLine("(lsToPos) Final Position isn't set!");
         }else{
             telemetry.addLine("(lsToPos) Unknown execute if error!");
-        }
+        }*/
 
-        telemetry.update();
+        //telemetry.update();
     }
 
     public boolean isFinished(){
@@ -55,8 +55,8 @@ public class MoveLinearSlideToPos extends CommandBase {
         } else {
             finished = this.linearSlideSub.getPosition() < this.finalPos;
         }
-        telemetry.addData("(lsToPos) Is Extending?", this.isExtending);
-        telemetry.addData("(lsToPos) finished?", finished);
+        //telemetry.addData("(lsToPos) Is Extending?", this.isExtending);
+        //telemetry.addData("(lsToPos) finished?", finished);
         //System.out.println("(lsToPos) Is Extending? " + this.isExtending);
         //System.out.println("(lsToPos) finished? " + finished);
         return finished;

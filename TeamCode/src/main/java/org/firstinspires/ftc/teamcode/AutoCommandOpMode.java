@@ -39,6 +39,9 @@ public class AutoCommandOpMode extends CommandOpMode
     public ArmHighGoal armHighGoal;
 
     public ArmToPosition arm0;
+    public ArmToPosition arm5;
+    public ArmToPosition arm20;
+    public ArmToPosition arm55;
     public ArmToPosition arm65;
     public ArmToPosition arm60;
     public ArmToPosition armBottom;
@@ -48,10 +51,15 @@ public class AutoCommandOpMode extends CommandOpMode
 
     public MoveLinearSlideToPos lsLowGoal;
     public MoveLinearSlideToPos lsBottom;
+    public MoveLinearSlideToPos lsBottom2;
     public MoveLinearSlideToPos lsSpeci;
+    public MoveLinearSlideToPos lsSpeci50;
     public MoveLinearSlideToPos lsBack;
+    public MoveLinearSlideToPos lsBack2;
+    public MoveLinearSlideToPos ls50;
 
     public MoveWrist wrist01;
+    public MoveWrist wrist03;
     public MoveWrist wrist04;
     public MoveWrist wrist07;
 
@@ -67,9 +75,12 @@ public class AutoCommandOpMode extends CommandOpMode
         armMed = new ArmMed(arm, drive);
         armHighGoal = new ArmHighGoal(arm, drive);
         arm0 = new ArmToPosition(arm, 0.0, drive, true);
+        arm5 = new ArmToPosition(arm, -2.0, drive, true);
         armBottom = new ArmToPosition(arm, -27, drive, true);
-        arm65 = new ArmToPosition(arm, 65, drive, false);
+        arm20 = new ArmToPosition(arm, 20, drive, false);
+        arm55 = new ArmToPosition(arm, 55, drive, false);
         arm60 = new ArmToPosition(arm, 60, drive, false);
+        arm65 = new ArmToPosition(arm, 65, drive, false);
 
         gripperSub = new GripperSub(hardwareMap,telemetry);
         gripHold = new GripperMove(gripperSub, Constants.GrabberConstants.wristGrip, telemetry);
@@ -78,11 +89,16 @@ public class AutoCommandOpMode extends CommandOpMode
         linearSlideSub = new LinearSlideSub(hardwareMap, telemetry);
         lsLowGoal = new MoveLinearSlideToPos(linearSlideSub, (int)Constants.LinearSlideConstants.lsLowGoalConstant,0.5,telemetry);
         lsBottom = new MoveLinearSlideToPos(linearSlideSub,0,0.5,telemetry);
+        lsBottom2 = new MoveLinearSlideToPos(linearSlideSub,0,0.5,telemetry);
         lsSpeci = new MoveLinearSlideToPos(linearSlideSub, Constants.LinearSlideConstants.lsSpeci,0.5,telemetry);
+        lsSpeci50 = new MoveLinearSlideToPos(linearSlideSub, Constants.LinearSlideConstants.lsSpeci+100,0.5,telemetry);
         lsBack = new MoveLinearSlideToPos(linearSlideSub, Constants.LinearSlideConstants.lsBack,0.5,telemetry);
+        lsBack2 = new MoveLinearSlideToPos(linearSlideSub, Constants.LinearSlideConstants.lsBack,0.5,telemetry);
+        ls50 = new MoveLinearSlideToPos(linearSlideSub,50,0.5,telemetry);
 
         wristSub = new NewWristSub(hardwareMap, telemetry);
         wrist01 = new MoveWrist(wristSub, telemetry, 0.1);
+        wrist03 = new MoveWrist(wristSub, telemetry, 0.35);
         wrist04 = new MoveWrist(wristSub, telemetry, 0.4);
         wrist07 = new MoveWrist(wristSub, telemetry, 0.7);
 
@@ -106,6 +122,7 @@ public class AutoCommandOpMode extends CommandOpMode
     }
 
     public DriveDistanceCmd drive(int inches){
+        telemetry.update();
         return new DriveDistanceCmd(inches, Constants.DriveConstants.driveSpeed, drive, telemetry);
     }
 
