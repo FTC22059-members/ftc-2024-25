@@ -14,18 +14,18 @@ public class AutoBucketA4 extends AutoCommandOpMode {
                 gripHold
                 , drive(16)
                 , turnCCW(87)
-                , drive(49)
+                , drive(47)
                 , turnCCW(43)
-                , drive(8)
+                , drive(9)
                 , new ArmLowGoal(arm,telemetry)
                 , new Pause(2000)
                 , lsLowGoal
                 , gripRelease
                 , lsBottom
                 , armBottom
-                , drive(-8)
+                , drive(-9)
                 , turnCW(43)
-                , drive(-83)
+                , drive(-81)
                 , turnCW(90)
                 , drive(-18)
                 , new ArmPower0(arm)
